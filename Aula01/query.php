@@ -7,5 +7,4 @@
   echo "<pre>";
   print_r($resulta);
   echo "</pre>";
-
 ?>
