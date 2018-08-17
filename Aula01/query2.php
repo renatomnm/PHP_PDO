@@ -11,6 +11,7 @@
 </select>
 
 <ul>
-  <?php  while($row = $q->fetch(PDO::FETCH_OBJ))?>
-  <li><?php echo $row->name ?></li>
+  <?php  while($row = $q->fetch(PDO::FETCH_OBJ)) {?>
+  <li><?php echo $row->name; ?></li>
+<?php } ?>
 </ul>
