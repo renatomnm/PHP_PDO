@@ -1,7 +1,6 @@
 <?php
 include("connection.php");
 
-
 $title = $_POST['title'];
 $rating = $_POST['rating'];
 $awards = $_POST['awards'];
@@ -16,18 +15,16 @@ $result = [];
     $result[] = $row->title;
   }
 if(!empty($result)){
-
-  $setAwards = $conn->prepare('UPDATE movies SET awards = :awards');
-  $verify->prepare('UPDATE movies SET release_date = :release_date');
-  $verify->prepare('UPDATE movies SET length = :length');
-  $verify->prepare('UPDATE movies SET genre_id = :genre_id');
-  $setAwards->execute([
-    ':rating' =>$rating,
-    ':awards' =>$awards,
-    ':release_date'=>$release_date,
-    ':length'=>$length,
-    ':genre_id'=>$genre_id
-  ]);
+  $setRating = $conn->prepare('UPDATE movies SET rating = :rating WHERE title = :title');
+  $setAwards = $conn->prepare('UPDATE movies SET awards = :awards WHERE title = :title ');
+  $setRelease = $conn->prepare('UPDATE movies SET release_date = :release_date WHERE title = :title');
+  $setLength = $conn->prepare('UPDATE movies SET length = :length WHERE title = :title');
+  $setGenreId = $conn->prepare('UPDATE movies SET genre_id = :genre_id WHERE title = :title');
+  $setRating->execute([':rating'=>$rating,':title'=>$title]);
+  $setAwards->execute([':awards'=>$awards,':title'=>$title]);
+  $setRelease->execute([':release_date'=>$release_date,':title'=>$title]);
+  $setLength->execute([':length'=>$release_date,':title'=>$title]);
+  $setGenreId->execute([':genre_id'=>$genre_id,':title'=>$title]);
   echo "registro atualizado com sucesso";
 }
 else{
