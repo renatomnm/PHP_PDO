@@ -8,12 +8,17 @@ $release_date = $_POST['release_date'];
 $length = $_POST['length'];
 $genre_id = $_POST['genre_id'];
 
+var_dump($genre_id);
+
 $verify = $conn->prepare('SELECT * FROM movies WHERE title = :title');
 $verify->execute([':title'=>$title]);
 $result = [];
-  while($row = $verify->fetch(PDO::FETCH_OBJ)){
-    $result[] = $row->title;
-  }
+
+while($row = $verify->fetch(PDO::FETCH_OBJ)){
+  $result[] = $row->title;
+}
+
+
 if(!empty($result)){
   $setRating = $conn->prepare('UPDATE movies SET rating = :rating WHERE title = :title');
   $setAwards = $conn->prepare('UPDATE movies SET awards = :awards WHERE title = :title ');

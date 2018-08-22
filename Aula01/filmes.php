@@ -1,22 +1,14 @@
 <?php
   include("connection.php");
-  $query = $conn->query("SELECT * FROM movies");
-  $q = $conn->query("SELECT * FROM genres")
+  $queryMovies = $conn->query("SELECT * FROM movies");
+  $queryGenres = $conn->query("SELECT * FROM genres")
 ?>
 
-<select name="nomes">
-  <?php while($row = $query->fetch(PDO::FETCH_OBJ)) {?>
-    <option value="<?php $row->id; ?>"/> <?php echo $row->title ?>
+<select name="genre_id" form="moviesForm">
+  <?php while($row = $queryGenres->fetch(PDO::FETCH_OBJ)) {?>
+    <option value="<?php $row->id; ?>"/> <?php echo $row->name ?></option>
     <?php }?>
 </select>
-
-<ul>
-  <?php  while($row = $q->fetch(PDO::FETCH_OBJ)) {?>
-  <li><?php echo $row->id . " - " . $row->name;
-    ?>
-  </li>
-<?php } ?>
-</ul>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -25,13 +17,17 @@
     <title></title>
   </head>
   <body>
-    <form class="adicionarfilmes" action="adicionarFilmes.php" method="post">
+    <form class="adicionarfilmes" action="adicionarFilmes.php" method="post" id="moviesForm">
         <input type="text" name="title" value="title">
         <input type="text" name="rating" value="rating">
         <input type="text" name="awards" value="awards">
         <input type="text" name="release_date" value="release_date">
         <input type="text" name="length" value="length">
-        <input type="text" name="genre_id" value="genre_id">
+        <select name="genre_id" id="genre_id">
+          <?php while($row = $queryGenres->fetch(PDO::FETCH_OBJ)) {?>
+            <option value="<?php $row->id; ?>"/> <?php echo $row->name ?></option>
+            <?php }?>
+        </select>
         <input type="submit" name="enviar" value="enviar">
     </form>
   </body>
